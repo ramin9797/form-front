@@ -8,8 +8,13 @@ import AccountBalance from './AccountBalance';
 import Wallets from './Wallets';
 import AccountSecurity from './AccountSecurity';
 import WatchList from './WatchList';
+import { useAppSelector } from 'src/hooks/redux';
 
 function DashboardCrypto() {
+
+  const state = useAppSelector(state=>state.userReducer.user);
+  console.log(state);
+
   return (
     <>
       <Helmet>

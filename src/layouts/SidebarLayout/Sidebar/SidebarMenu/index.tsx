@@ -266,6 +266,20 @@ function SidebarMenu() {
         >
           <SubMenuWrapper>
             <List component="div">
+
+            <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/management/profile/signin"
+                  startIcon={<AccountCircleTwoToneIcon />}
+                >
+                  User Profile
+                </Button>
+              </ListItem>
+
+
               <ListItem component="div">
                 <Button
                   disableRipple

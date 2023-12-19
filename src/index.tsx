@@ -6,15 +6,26 @@ import 'nprogress/nprogress.css';
 import App from 'src/App';
 import { SidebarProvider } from 'src/contexts/SidebarContext';
 import * as serviceWorker from 'src/serviceWorker';
+import AuthMiddleware from './middleware/AuthMiddleware';
+import { Provider } from 'react-redux';
+import { setupStore } from './store/store';
+
+
+const store = setupStore();
+
 
 ReactDOM.render(
-  <HelmetProvider>
-    <SidebarProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </SidebarProvider>
-  </HelmetProvider>,
+  <Provider store={store}>
+    <HelmetProvider>
+      <SidebarProvider>
+        <BrowserRouter>
+        <AuthMiddleware>
+          <App />
+        </AuthMiddleware>
+        </BrowserRouter>
+      </SidebarProvider>
+    </HelmetProvider>
+  </Provider>,
   document.getElementById('root')
 );
 

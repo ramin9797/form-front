@@ -4,6 +4,7 @@ import { RouteObject } from 'react-router';
 
 import SidebarLayout from 'src/layouts/SidebarLayout';
 import BaseLayout from 'src/layouts/BaseLayout';
+import AuthLayout from 'src/layouts/AuthLayout';
 
 import SuspenseLoader from 'src/components/SuspenseLoader';
 
@@ -17,6 +18,13 @@ const Loader = (Component) => (props) =>
 // Pages
 
 const Overview = Loader(lazy(() => import('src/content/overview')));
+
+
+//Auth
+
+const SignIn = Loader(lazy(()=>import('src/content/applications/Auth/SignIn')))
+const SignUp = Loader(lazy(()=>import('src/content/applications/Auth/SignUp')))
+const Posts = Loader(lazy(()=>import('src/content/applications/Auth/Posts')))
 
 // Dashboards
 
@@ -78,6 +86,24 @@ const StatusMaintenance = Loader(
 
 const routes: RouteObject[] = [
   {
+    path:'auth',
+    element:<AuthLayout/>,
+    children:[
+      {
+        path: 'signin',
+        element: <SignIn />
+      },
+      {
+        path: 'signup',
+        element: <SignUp />
+      },
+      {
+        path: 'posts',
+        element: <Posts />
+      },
+    ]
+  },
+  {
     path: '',
     element: <BaseLayout />,
     children: [
@@ -85,6 +111,7 @@ const routes: RouteObject[] = [
         path: '/',
         element: <Overview />
       },
+    
       {
         path: 'overview',
         element: <Navigate to="/" replace />
@@ -154,8 +181,8 @@ const routes: RouteObject[] = [
         path: 'profile',
         children: [
           {
-            path: '',
-            element: <Navigate to="details" replace />
+            path: 'signin',
+            element: <UserProfile />
           },
           {
             path: 'details',

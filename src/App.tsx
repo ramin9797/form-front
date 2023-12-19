@@ -6,17 +6,18 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
 import { CssBaseline } from '@mui/material';
 import ThemeProvider from './theme/ThemeProvider';
+import { Provider } from 'react-redux';
 
 function App() {
   const content = useRoutes(router);
 
   return (
-    <ThemeProvider>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <CssBaseline />
-        {content}
-      </LocalizationProvider>
-    </ThemeProvider>
+      <ThemeProvider>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <CssBaseline />
+            {content}
+        </LocalizationProvider>
+      </ThemeProvider>
   );
 }
 export default App;
