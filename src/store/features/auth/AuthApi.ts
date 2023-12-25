@@ -3,6 +3,7 @@ import { baseQueryWithReauth } from 'src/store/axios';
 import { ILoginInput, IRegisterInput, IUser } from 'src/models/IUser';
 import { userApi } from '../UserApi';
 import {IServerError} from "src/models/IError";
+import { setUser } from 'src/store/reducers/UserSlice';
 
 export interface ILoginResponse {
     access_token :string;
@@ -52,7 +53,18 @@ export const authApi = createApi({
         return {
           url: 'auth/logout',
           credentials: 'include',
+          method: 'POST',
         };
+      },
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const result = await queryFulfilled;
+          localStorage.removeItem('token');
+          await dispatch(setUser());
+        } catch (error) {
+          console.error('Login error:', error);
+          return error;
+        }
       },
     }),
   }),

@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import { Box, Typography,Grid } from '@mui/material';
-import { FC, ReactNode } from 'react';
-import { Outlet } from 'react-router';
+import { FC, ReactNode, useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router';
+import { userApi } from "src/store/features/UserApi";
 
 // TODO: Change subtitle text
 interface BaseLayoutProps {
@@ -10,6 +11,27 @@ interface BaseLayoutProps {
 
 
 const AuthLayout:FC<BaseLayoutProps> = ({children}) => {
+  let token = localStorage.getItem('token');
+  const { isLoading, isFetching,data } = userApi.endpoints.getMe.useQuery(null, {
+    skip: !token,
+    refetchOnMountOrArgChange: true,
+  });
+
+  const loading = isLoading || isFetching;
+    
+  const user = userApi.endpoints.getMe.useQueryState(null, {
+    selectFromResult: ({ data }) => data,
+  });
+
+  const navigate = useNavigate();
+  useEffect(()=>{
+    if(!token || !data) return;
+    if(!loading && user){
+      navigate("/dashboards")
+    }
+  },[user,loading])
+
+
   return (
     <Box
       component="main"

@@ -19,9 +19,7 @@ ReactDOM.render(
     <HelmetProvider>
       <SidebarProvider>
         <BrowserRouter>
-        <AuthMiddleware>
           <App />
-        </AuthMiddleware>
         </BrowserRouter>
       </SidebarProvider>
     </HelmetProvider>

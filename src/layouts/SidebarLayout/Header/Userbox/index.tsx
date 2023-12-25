@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import {
   Avatar,
@@ -22,6 +22,7 @@ import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
 import AccountBoxTwoToneIcon from '@mui/icons-material/AccountBoxTwoTone';
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
 import AccountTreeTwoToneIcon from '@mui/icons-material/AccountTreeTwoTone';
+import { useLogoutUserMutation } from 'src/store/features/auth/AuthApi';
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
@@ -59,6 +60,10 @@ const UserBoxDescription = styled(Typography)(
 );
 
 function HeaderUserbox() {
+
+  const [logoutUser,{isLoading,isSuccess,error,isError}] = useLogoutUserMutation();
+  const navigate = useNavigate()
+
   const user = {
     name: 'Catherine Pike',
     avatar: '/static/images/avatars/1.jpg',
@@ -75,6 +80,18 @@ function HeaderUserbox() {
   const handleClose = (): void => {
     setOpen(false);
   };
+
+  const signOut = async ()=>{
+      try{
+        await logoutUser();
+        console.log('213123123123123123');
+        
+        navigate("/auth/signin")
+      }
+      catch(e){
+        console.log(e)
+      }
+  }
 
   return (
     <>
@@ -135,7 +152,7 @@ function HeaderUserbox() {
         </List>
         <Divider />
         <Box sx={{ m: 1 }}>
-          <Button color="primary" fullWidth>
+          <Button color="primary" fullWidth onClick={signOut}>
             <LockOpenTwoToneIcon sx={{ mr: 1 }} />
             Sign out
           </Button>

@@ -69,6 +69,7 @@ const Avatars = Loader(
 const Cards = Loader(lazy(() => import('src/content/pages/Components/Cards')));
 const Forms = Loader(lazy(() => import('src/content/pages/Components/Forms')));
 
+const AuthMiddleware = Loader(lazy(() => import('src/middleware/AuthMiddleware')));
 // Status
 
 const Status404 = Loader(
@@ -149,7 +150,7 @@ const routes: RouteObject[] = [
   },
   {
     path: 'dashboards',
-    element: <SidebarLayout />,
+    element:(<AuthMiddleware><SidebarLayout /></AuthMiddleware>),
     children: [
       {
         path: '',
@@ -167,7 +168,7 @@ const routes: RouteObject[] = [
   },
   {
     path: 'management',
-    element: <SidebarLayout />,
+    element: <AuthMiddleware><SidebarLayout /></AuthMiddleware>,
     children: [
       {
         path: '',
@@ -198,7 +199,7 @@ const routes: RouteObject[] = [
   },
   {
     path: '/components',
-    element: <SidebarLayout />,
+    element: <AuthMiddleware><SidebarLayout /></AuthMiddleware>,
     children: [
       {
         path: '',
